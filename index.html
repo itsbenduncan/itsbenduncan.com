@@ -164,16 +164,50 @@ body::before {
 /* real photos: photos/photo-N.jpg drops into frame N and covers the CSS stand-in */
 .fr .pic { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; animation: develop 2.4s cubic-bezier(.3,.1,.3,1) both; }
 
+/* 120 roll: square 6x6 frames, no sprockets. One panorama runs across all three. */
+.strip.s120 { padding: 16px 9px 18px; gap: 6px; background: #201915; }
+.strip.s120::before, .strip.s120::after { content: none; }
+.sq { position: relative; aspect-ratio: 1; }
+.sq .pshot {
+  position: absolute; inset: 0; animation: develop 2.4s cubic-bezier(.3,.1,.3,1) both;
+  background: var(--pano-img, radial-gradient(circle at 74% 47%, #fff4d6 0 3.5%, rgba(255,226,160,.55) 5%, transparent 14%), linear-gradient(#a9c4dd 0, #f4d2b0 42%, #f6c79a 50%, #2a6f86 50.4%, #165068 72%, #0d3a4f 100%));
+  background-size: var(--pano-size, calc(300% + 12px) 100%); background-repeat: no-repeat;
+}
+.sq:nth-of-type(1) .pshot { background-position: 0% 50%; animation-delay: 1.4s; }
+.sq:nth-of-type(2) .pshot { background-position: 50% 50%; animation-delay: 1.4s; }
+.sq:nth-of-type(3) .pshot { background-position: 100% 50%; animation-delay: 1.4s; }
+.s120 .edge { top: 4px; }
+.s120 .no { position: absolute; left: 50%; bottom: -13px; transform: translateX(-50%); font: 700 8px/1 var(--cond); letter-spacing: .12em; color: var(--edge); }
+.pano-note { position: absolute; z-index: 3; right: -2%; bottom: -14px; transform: rotate(-3deg); font: 400 clamp(18px, 1.9vw, 24px)/1 var(--script); color: var(--red); }
+.strip.s120 { margin-top: 16px; transform: rotate(-.4deg); }
+
+/* loose 4x5 instant prints lying on the sheet */
+.prints { position: relative; z-index: 2; display: flex; justify-content: center; gap: 7%; margin-top: -34px; padding: 0 4%; }
+.print {
+  margin: 0; width: 36%; background: #fbfaf6; padding: 5% 5% 0; transform: rotate(-5deg);
+  box-shadow: 0 1px 0 var(--line), 0 14px 28px -12px rgba(22,16,26,.5), 0 0 0 1px rgba(22,16,26,.07);
+}
+.print + .print { transform: rotate(4deg) translateY(18px); }
+.print .img {
+  position: relative; aspect-ratio: 4 / 5; background-size: cover; background-position: center; overflow: hidden;
+  border: 3px solid #1b1512; border-radius: 1px; animation: develop 2.8s cubic-bezier(.3,.1,.3,1) 1.7s both;
+}
+.print figcaption { padding: 7px 0 9px; text-align: center; font: 400 clamp(18px, 1.8vw, 23px)/1 var(--script); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* stand-ins until sheet-1 / sheet-2 exist */
+.print .falls { background: linear-gradient(90deg, transparent 38%, rgba(255,255,255,.85) 44%, #fff 50%, rgba(255,255,255,.85) 56%, transparent 62%) 0 0 / 100% 58% no-repeat, linear-gradient(#cfd6d4 0, #cfd6d4 8%, #4f5b3a 8.5%, #6b6a3e 58%, #3b4446 58.5%, #23292b 100%); }
+.print .rock { background: linear-gradient(#e9e8e6, #d6d5d3 40%, transparent 40.5%), linear-gradient(#e9e8e6, #d6d5d3); }
+.print .rock::after { content: ""; position: absolute; inset: 0; background: #2b2120; clip-path: polygon(0 48%, 18% 34%, 30% 38%, 44% 26%, 58% 33%, 70% 28%, 86% 40%, 100% 46%, 100% 100%, 0 100%); }
+
 /* grease pencil */
 .mark { position: absolute; pointer-events: none; z-index: 3; overflow: visible; }
 .mark path { fill: none; stroke: var(--red); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
 .mark.circle { left: -1%; top: 6%; width: 37%; height: 88%; }
 .mark.x { left: 36%; top: 16%; width: 28%; height: 70%; }
 .keeper { position: absolute; z-index: 3; left: 3%; top: -6px; transform: rotate(-8deg); font: 400 clamp(22px, 2.4vw, 30px)/1 var(--script); color: var(--red); }
-.developing { margin: 18px 0 0; text-align: left; padding-left: 8%; font: 400 clamp(22px, 2.3vw, 30px)/1 var(--script); color: var(--mast-ink); }
+.developing { margin: 34px 0 0; text-align: center; font: 400 clamp(22px, 2.3vw, 30px)/1 var(--script); color: var(--mast-ink); }
 
 /* starburst */
-.burstwrap { position: absolute; right: -9%; bottom: 15%; width: clamp(128px, 32%, 190px); z-index: 4; filter: drop-shadow(3px 4px 0 var(--ink)); }
+.burstwrap { position: absolute; right: -10%; top: 30%; width: clamp(128px, 32%, 190px); z-index: 4; filter: drop-shadow(3px 4px 0 var(--ink)); }
 .burst {
   aspect-ratio: 1; background: var(--sticker); transform: rotate(12deg);
   display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 18%; gap: 2px;
@@ -230,7 +264,7 @@ body::before {
   .cl.r { text-align: left; align-items: flex-start; }
   .cl.r .list li::after { content: none; } .cl.r .list li::before { content: "★ "; color: var(--pink); }
   .line { max-width: none; }
-  .burstwrap { right: -3%; bottom: 13%; width: 112px; }
+  .burstwrap { right: -4%; top: 34%; width: 108px; }
   .mast .name { white-space: normal; font-size: 19.6cqi; line-height: .84; }
   .mast .name .w { display: block; }
   .mast .its { left: 13%; top: -0.3em; font-size: 52px; }
@@ -264,7 +298,7 @@ body::before {
       <ul class="list"><li>Sunrises, mostly</li><li>Squall lines</li><li>Window seats</li></ul>
     </div>
 
-    <div class="hero" aria-label="A contact sheet of six frames, still developing">
+    <div class="hero" aria-label="A contact sheet of film strips and two loose prints">
       <div class="burstwrap"><div class="burst"><span class="b1">coming</span><span class="b2">SOON</span><span class="b3">The photo issue</span></div></div>
       <div class="sheet">
         <div class="slug"><span>Roll 001 · Proofs</span><span>Do not crop</span></div>
@@ -283,6 +317,16 @@ body::before {
           <div class="fr" data-n="6"><div class="shot squall"></div><span class="no">▸ 14A</span></div>
           <svg class="mark x" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M8 10 C 35 38, 62 66, 92 92 M90 8 C 64 36, 36 64, 10 94"/></svg>
         </div>
+        <div class="strip s120" data-pano>
+          <span class="edge">120 · 6×6</span>
+          <div class="sq"><div class="pshot"></div><span class="no">◂ 7</span></div>
+          <div class="sq"><div class="pshot"></div><span class="no">◂ 8</span></div>
+          <div class="sq"><div class="pshot"></div><span class="no">◂ 9</span></div>
+        </div>
+      </div>
+      <div class="prints">
+        <figure class="print" data-sheet="1"><div class="img falls"></div><figcaption>4×5 · No. 1</figcaption></figure>
+        <figure class="print" data-sheet="2"><div class="img rock"></div><figcaption>4×5 · No. 2</figcaption></figure>
       </div>
       <p class="developing">the pictures are still developing…</p>
     </div>
@@ -343,19 +387,30 @@ body::before {
 
   // Photos: drop photos/photo-1.webp … photo-6.webp (or .jpg/.jpeg/.png, lowercase) into the repo and they replace the drawn frames.
   // Frames 1–3 are the top strip, 4–6 the bottom. Missing files just leave the drawing in place.
+  // photos/pano spreads across the three square 120 frames; photos/sheet-1 and sheet-2 fill the 4x5 prints.
   const EXT = ["webp", "jpg", "jpeg", "png"];
-  document.querySelectorAll(".fr[data-n]").forEach(fr => {
-    const n = fr.dataset.n;
+  const load = (name, ok) => {
     const tryExt = k => {
       if (k >= EXT.length) return;
-      const img = new Image();
-      img.className = "pic"; img.alt = ""; img.decoding = "async";
-      img.onload = () => { fr.querySelector(".shot")?.remove(); fr.prepend(img); };
+      const img = new Image(); img.decoding = "async";
+      img.onload = () => ok(img);
       img.onerror = () => tryExt(k + 1);
-      img.src = `photos/photo-${n}.${EXT[k]}`;
+      img.src = `photos/${name}.${EXT[k]}`;
     };
     tryExt(0);
+  };
+  document.querySelectorAll(".fr[data-n]").forEach(fr => load(`photo-${fr.dataset.n}`, img => {
+    img.className = "pic"; img.alt = ""; fr.querySelector(".shot")?.remove(); fr.prepend(img);
+  }));
+  const pano = document.querySelector("[data-pano]");
+  if (pano) load("pano", img => {
+    pano.style.setProperty("--pano-img", `url("${img.src}")`);
+    pano.style.setProperty("--pano-size", "calc(300% + 12px) auto");
   });
+  document.querySelectorAll(".print[data-sheet]").forEach(pr => load(`sheet-${pr.dataset.sheet}`, img => {
+    const box = pr.querySelector(".img");
+    box.className = "img"; box.style.backgroundImage = `url("${img.src}")`;
+  }));
 
   // Address assembled here so scrapers reading the HTML don't get it.
   const who = ["itsbenduncan", "gmail.com"].join("@");
