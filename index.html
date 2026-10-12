@@ -341,9 +341,9 @@ body::before {
   const mm = String(d.getMonth() + 1).padStart(2, "0"), dd = String(d.getDate()).padStart(2, "0");
   document.getElementById("upc").textContent = `0 ${String(n).padStart(5, "0")} ${mm} ${dd}${String(d.getFullYear()).slice(2)}`;
 
-  // Photos: drop photos/photo-1.jpg … photo-6.jpg (or .jpeg/.webp/.png) into the repo and they replace the drawn frames.
+  // Photos: drop photos/photo-1.webp … photo-6.webp (or .jpg/.jpeg/.png, lowercase) into the repo and they replace the drawn frames.
   // Frames 1–3 are the top strip, 4–6 the bottom. Missing files just leave the drawing in place.
-  const EXT = ["jpg", "jpeg", "webp", "png"];
+  const EXT = ["webp", "jpg", "jpeg", "png"];
   document.querySelectorAll(".fr[data-n]").forEach(fr => {
     const n = fr.dataset.n;
     const tryExt = k => {

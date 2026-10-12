@@ -1,6 +1,13 @@
 # Contact-sheet photos
 
-Name them `photo-1` to `photo-6` and they drop into the 35mm frames on the cover:
+Drop photos in here named `photo-1` to `photo-6` (any format: JPG, PNG, HEIC…), then run:
+
+```
+photos/convert.sh            # convert everything to web-sized .webp
+photos/convert.sh 2:90       # …and rotate photo-2 90° clockwise (270 = counter-clockwise)
+```
+
+It shrinks each one to 1400 px on the long side, saves `photo-N.webp`, and moves the original to `~/Pictures/itsbenduncan-originals` so the full-size file never ends up in git. Then commit and push.
 
 | File | Frame |
 | --- | --- |
@@ -11,7 +18,6 @@ Name them `photo-1` to `photo-6` and they drop into the 35mm frames on the cover
 | photo-5 | bottom strip, middle (the one with the red X) |
 | photo-6 | bottom strip, right |
 
-- `.jpg`, `.jpeg`, `.webp` or `.png` all work. The page tries them in that order.
-- The frames are 3:2 landscape and get cropped to fill, centred. About 900 px wide is plenty; keep each under ~300 KB.
-- Any frame without a photo keeps its drawn stand-in, so you can add them one at a time.
-- Commit and push, and the site updates in about a minute.
+- Frames are 3:2 landscape and crop to fill, centred.
+- Any frame without a photo keeps its drawn stand-in.
+- The page looks for `.webp` first, then `.jpg`, `.jpeg`, `.png`. Extensions must be lowercase (GitHub Pages is case-sensitive), which the script handles for you.
