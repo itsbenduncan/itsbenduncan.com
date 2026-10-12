@@ -20,4 +20,4 @@ The script shrinks each photo to at most 1400 px on the long side (2400 for `pan
 - Anything that isn't the right shape gets cropped to fill, centred. A pano wider than 3:1 leaves gaps top and bottom, so crop it to 3:1 first.
 - Any slot without a photo keeps its drawn stand-in.
 - The page looks for `.webp` first, then `.jpg`, `.jpeg`, `.png`. Extensions must be lowercase (GitHub Pages is case-sensitive), which the script handles for you.
-- The captions under the 4×5 prints are in `index.html` (search for `4×5 · No.`).
+
